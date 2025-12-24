@@ -6,6 +6,7 @@ import com.project.hospitalMangement.entity.Patient;
 import com.project.hospitalMangement.repository.AppointmentRepository;
 import com.project.hospitalMangement.repository.DoctorRepository;
 import com.project.hospitalMangement.repository.PatientRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ public class AppointmentService {
     private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
 
+    @Transactional
     public Appointment createNewAppointment(Appointment appointment,Long doctorId,Long patientId){
         Doctor doctor=doctorRepository.findById(doctorId).orElseThrow();
         Patient patient=patientRepository.findById(patientId).orElseThrow();
@@ -30,5 +32,15 @@ public class AppointmentService {
          patient.getAppointments().add(appointment); // to maintain consistency
 
          return appointmentRepository.save(appointment);
+    }
+
+    @Transactional
+    public Appointment reAssignAppointmentToAnotherDoctor(Long appointmentId, Long doctorId) {
+        Appointment appointment=appointmentRepository.findById(appointmentId).orElseThrow();
+        Doctor doctor=doctorRepository.findById(doctorId).orElseThrow();
+
+        appointment.setDoctor(doctor);
+        return appointment;
+
     }
 }
