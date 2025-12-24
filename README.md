@@ -1,4 +1,5 @@
 ﻿# Hostpital_Management
 
-A springboot project hospital management project.
+A springboot hospital management project.
+
 
