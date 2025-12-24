@@ -28,4 +28,6 @@ public class PatientTests {
         Patient patient=patientService.getPatientById(2L);
         System.out.println(patient);
     }
+
+
 }
